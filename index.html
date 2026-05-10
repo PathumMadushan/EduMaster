@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMaster — Smart Quiz Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── AUTH ─── -->
+<div id="auth-overlay">
+  <div class="auth-box">
+    <div class="auth-logo">Edu<span>Master</span></div>
+    <p class="auth-sub">Smart Quiz Platform · AI-Powered Learning</p>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" onclick="switchTab('register')">Register</button>
+    </div>
+    <div class="auth-form" id="login-form">
+      <input type="text" id="login-user" placeholder="Username" />
+      <input type="password" id="login-pass" placeholder="Password" />
+      <p class="auth-err" id="login-err">Invalid username or password</p>
+      <button class="auth-btn" onclick="doLogin()">Login →</button>
+    </div>
+    <div class="auth-form" id="register-form" style="display:none">
+      <input type="text" id="reg-name" placeholder="Full Name" />
+      <input type="text" id="reg-user" placeholder="Username" />
+      <input type="password" id="reg-pass" placeholder="Password" />
+      <p class="auth-err" id="reg-err"></p>
+      <button class="auth-btn" onclick="doRegister()">Create Account →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── APP ─── -->
+<div id="app">
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">Edu<span>Master</span></div>
+        <div class="user-chip">
+          <div class="user-avatar" id="user-avatar">?</div>
+          <div>
+            <div class="user-name" id="user-display">User</div>
+            <div class="user-score">⭐ <span id="total-score">0</span> pts</div>
+          </div>
+          <button class="logout-btn" onclick="doLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-section-label">Menu</div>
+        <div class="nav-item active" onclick="showPage('home')" id="nav-home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </div>
+        <div class="nav-item" onclick="showPage('history')" id="nav-history">
+          <span class="nav-icon">📜</span>
+          <span class="nav-label">Quiz History</span>
+        </div>
+        <div class="nav-item" onclick="showPage('achievements')" id="nav-achievements">
+          <span class="nav-icon">🏆</span>
+          <span class="nav-label">Achievements</span>
+          <span class="nav-badge" id="ach-nav-badge">0</span>
+        </div>
+
+        <div class="nav-section-label" style="margin-top:20px">Modules</div>
+
+        <!-- MODULE: Discrete Mathematics -->
+        <div class="module-header" onclick="toggleModule('mod-dm')" id="modhead-dm">
+          <div class="module-icon">🧠</div>
+          <div class="module-name">Discrete Mathematics</div>
+          <div class="module-chevron closed" id="chevron-dm">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-dm">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(0)" id="nav-s0">
+            <span class="nav-icon">📐</span>
+            <span class="nav-label">Propositional Logic</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(1)" id="nav-s1">
+            <span class="nav-icon">🔢</span>
+            <span class="nav-label">Number Theory</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(2)" id="nav-s2">
+            <span class="nav-icon">🎲</span>
+            <span class="nav-label">Probability</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(3)" id="nav-s3">
+            <span class="nav-icon">🔗</span>
+            <span class="nav-label">Sets & Relations</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(4)" id="nav-s4">
+            <span class="nav-icon">🌐</span>
+            <span class="nav-label">Graph Theory</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(5)" id="nav-s5">
+            <span class="nav-icon">🔣</span>
+            <span class="nav-label">Nested Quantifiers</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(6)" id="nav-s6">
+            <span class="nav-icon">🧮</span>
+            <span class="nav-label">Counting Techniques</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(7)" id="nav-s7">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Mixed Questions</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+        </div>
+
+        <!-- MODULE: Intro to Computer Systems -->
+        <div class="module-header" onclick="toggleModule('mod-ics')" id="modhead-ics">
+          <div class="module-icon">💻</div>
+          <div class="module-name">Intro to Computer Systems</div>
+          <div class="module-chevron closed" id="chevron-ics">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-ics">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(38)" id="nav-s38">
+            <span class="nav-icon">💻</span>
+            <span class="nav-label">Introduction to Computer Systems</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(39)" id="nav-s39">
+            <span class="nav-icon">🕰️</span>
+            <span class="nav-label">History and Evolution of Computers</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(40)" id="nav-s40">
+            <span class="nav-icon">🖥️</span>
+            <span class="nav-label">Computer Hardware Fundamentals</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(41)" id="nav-s41">
+            <span class="nav-icon">🧠</span>
+            <span class="nav-label">Memory Systems</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(42)" id="nav-s42">
+            <span class="nav-icon">📱</span>
+            <span class="nav-label">Computer Software Fundamentals</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(43)" id="nav-s43">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Operating Systems</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(44)" id="nav-s44">
+            <span class="nav-icon">⌨️</span>
+            <span class="nav-label">Programming Fundamentals</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(45)" id="nav-s45">
+            <span class="nav-icon">🔢</span>
+            <span class="nav-label">Data Representation</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(46)" id="nav-s46">
+            <span class="nav-icon">🌐</span>
+            <span class="nav-label">Computer Networks Basics</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(47)" id="nav-s47">
+            <span class="nav-icon">🔒</span>
+            <span class="nav-label">Security and Ethical Issues</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+        </div>
+
+        <!-- MODULE: Computer Architecture -->
+        <div class="module-header" onclick="toggleModule('mod-ca')" id="modhead-ca">
+          <div class="module-icon">🖥️</div>
+          <div class="module-name">Computer Architecture</div>
+          <div class="module-chevron closed" id="chevron-ca">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-ca">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(21)" id="nav-s21"><span class="nav-icon">🏗️</span><span class="nav-label">Introduction to Computer Architecture</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(22)" id="nav-s22"><span class="nav-icon">🔢</span><span class="nav-label">Number System</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(23)" id="nav-s23"><span class="nav-icon">🔌</span><span class="nav-label">Boolean Logic and Circuit Fundamentals</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(24)" id="nav-s24"><span class="nav-icon">🗺️</span><span class="nav-label">Introduction to K Map</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(25)" id="nav-s25"><span class="nav-icon">⚡</span><span class="nav-label">Introduction to Level Parallelism</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(26)" id="nav-s26"><span class="nav-icon">🔧</span><span class="nav-label">Pipe Lining</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(27)" id="nav-s27"><span class="nav-icon">🖥️</span><span class="nav-label">Introduction to MIPS Processor Architecture</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(28)" id="nav-s28"><span class="nav-icon">🏛️</span><span class="nav-label">Digital Building Blocks and Architecture of Digital Computer</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(29)" id="nav-s29"><span class="nav-icon">🎛️</span><span class="nav-label">Control Unit Design</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(30)" id="nav-s30"><span class="nav-icon">⚙️</span><span class="nav-label">Combinational and Sequential Circuit</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(31)" id="nav-s31"><span class="nav-icon">🔄</span><span class="nav-label">Multi Tasking and Multi Processing</span><span class="nav-badge">30 Q</span></div>
+        </div>
+
+        <!-- MODULE: Fundamentals of Programming -->
+        <div class="module-header" onclick="toggleModule('mod-fp')" id="modhead-fp">
+          <div class="module-icon">⌨️</div>
+          <div class="module-name">Fundamentals of Programming</div>
+          <div class="module-chevron closed" id="chevron-fp">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-fp">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(60)" id="nav-s60"><span class="nav-icon">🐍</span><span class="nav-label">Python Basics</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(61)" id="nav-s61"><span class="nav-icon">🔀</span><span class="nav-label">Control Flow</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(62)" id="nav-s62"><span class="nav-icon">⚙️</span><span class="nav-label">Functions</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(63)" id="nav-s63"><span class="nav-icon">📋</span><span class="nav-label">Lists & Tuples</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(64)" id="nav-s64"><span class="nav-icon">📚</span><span class="nav-label">Dictionaries & Sets</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(65)" id="nav-s65"><span class="nav-icon">🏗️</span><span class="nav-label">OOP</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(66)" id="nav-s66"><span class="nav-icon">📁</span><span class="nav-label">File Handling & Exceptions</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(67)" id="nav-s67"><span class="nav-icon">🐍</span><span class="nav-label">Mixed Python</span><span class="nav-badge">30 Q</span></div>
+        </div>
+
+        <!-- MODULE: Database Systems -->
+        <div class="module-header" onclick="toggleModule('mod-dbs')" id="modhead-dbs">
+          <div class="module-icon">🗄️</div>
+          <div class="module-name">Database Systems</div>
+          <div class="module-chevron closed" id="chevron-dbs">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-dbs">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(32)" id="nav-s32"><span class="nav-icon">📘</span><span class="nav-label">Introduction to Database System</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(33)" id="nav-s33"><span class="nav-icon">🏛️</span><span class="nav-label">Database Architecture and Data Models</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(34)" id="nav-s34"><span class="nav-icon">🗂️</span><span class="nav-label">ER Models</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(35)" id="nav-s35"><span class="nav-icon">🧩</span><span class="nav-label">Relational Database Model</span><span class="nav-badge">30 Q</span></div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(36)" id="nav-s36"><span class="nav-icon">📐</span><span class="nav-label">Normalization</span><span class="nav-badge">30 Q</span></div>
+        </div>
+
+        <!-- MODULE: Data Structures & Algorithms -->
+        <div class="module-header" onclick="toggleModule('mod-dsa')" id="modhead-dsa">
+          <div class="module-icon">🧩</div>
+          <div class="module-name">Data Structures & Algorithms</div>
+          <div class="module-chevron closed" id="chevron-dsa">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-dsa">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(15)" id="nav-s15">
+            <span class="nav-icon">📚</span>
+            <span class="nav-label">Basics of Algorithms</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(16)" id="nav-s16">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Algorithm Analysis</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(17)" id="nav-s17">
+            <span class="nav-icon">↕️</span>
+            <span class="nav-label">Sorting Algorithms</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(18)" id="nav-s18">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Searching</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(19)" id="nav-s19">
+            <span class="nav-icon">🔗</span>
+            <span class="nav-label">Linked Lists</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(20)" id="nav-s20">
+            <span class="nav-icon">🌳</span>
+            <span class="nav-label">Trees</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+        </div>
+
+        <!-- MODULE: Data Communication -->
+        <div class="module-header" onclick="toggleModule('mod-dc')" id="modhead-dc">
+          <div class="module-icon">📡</div>
+          <div class="module-name">Data Communication</div>
+          <div class="module-chevron closed" id="chevron-dc">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-dc">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(48)" id="nav-s48">
+            <span class="nav-icon">📡</span>
+            <span class="nav-label">Introduction to Data Communication</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(49)" id="nav-s49">
+            <span class="nav-icon">🌐</span>
+            <span class="nav-label">Network Types and Topologies</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(50)" id="nav-s50">
+            <span class="nav-icon">📶</span>
+            <span class="nav-label">Transmission Media</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(51)" id="nav-s51">
+            <span class="nav-icon">🔣</span>
+            <span class="nav-label">Signals and Encoding</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(52)" id="nav-s52">
+            <span class="nav-icon">🧱</span>
+            <span class="nav-label">OSI Reference Model</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(53)" id="nav-s53">
+            <span class="nav-icon">🌍</span>
+            <span class="nav-label">TCP/IP Model</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(54)" id="nav-s54">
+            <span class="nav-icon">🔀</span>
+            <span class="nav-label">Switching Techniques</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(55)" id="nav-s55">
+            <span class="nav-icon">🛠️</span>
+            <span class="nav-label">Error Detection and Control</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(56)" id="nav-s56">
+            <span class="nav-icon">🎛️</span>
+            <span class="nav-label">Network Devices</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(57)" id="nav-s57">
+            <span class="nav-icon">🔒</span>
+            <span class="nav-label">Network Security</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(58)" id="nav-s58">
+            <span class="nav-icon">📱</span>
+            <span class="nav-label">Wireless and Mobile Communication</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(59)" id="nav-s59">
+            <span class="nav-icon">🚀</span>
+            <span class="nav-label">Modern Communication Technologies</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+        </div>
+
+        <!-- MODULE: Academic & Groomings -->
+        <div class="module-header" onclick="toggleModule('mod-ag')" id="modhead-ag">
+          <div class="module-icon">🎓</div>
+          <div class="module-name">Academic & Groomings</div>
+          <div class="module-chevron closed" id="chevron-ag">▾</div>
+        </div>
+        <div class="module-topics collapsed" id="mod-ag">
+          <div class="nav-item topic-item" onclick="startQuizFromNav(8)" id="nav-s8">
+            <span class="nav-icon">📘</span>
+            <span class="nav-label">Academic Grooming Introduction</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(9)" id="nav-s9">
+            <span class="nav-icon">🧩</span>
+            <span class="nav-label">Key Skills and Issues</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(10)" id="nav-s10">
+            <span class="nav-icon">🔎</span>
+            <span class="nav-label">Analysis Sources</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(11)" id="nav-s11">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Report Writing</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(12)" id="nav-s12">
+            <span class="nav-icon">🧠</span>
+            <span class="nav-label">Critical Evaluation</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(13)" id="nav-s13">
+            <span class="nav-icon">📄</span>
+            <span class="nav-label">Sample Research</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+          <div class="nav-item topic-item" onclick="startQuizFromNav(14)" id="nav-s14">
+            <span class="nav-icon">🎤</span>
+            <span class="nav-label">Oral Presentation</span>
+            <span class="nav-badge">30 Q</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-stats">
+        <div class="stat-row"><span class="stat-label">Quizzes Done</span><span class="stat-val" id="sb-quizzes">0</span></div>
+        <div class="stat-row"><span class="stat-label">Best Score</span><span class="stat-val" id="sb-best">—</span></div>
+        <div class="stat-row"><span class="stat-label">Avg Accuracy</span><span class="stat-val" id="sb-acc">—</span></div>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main" id="main-area">
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <button class="hamburger" id="mobile-sidebar-btn" onclick="toggleSidebar()" title="Open sidebar" aria-label="Open sidebar"><i class="fas fa-bars"></i></button>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" onclick="toggleSidebarDesktop()" title="Toggle sidebar"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div class="theme-toggle">
+          <button class="theme-toggle-btn dark-btn active" id="dark-btn" onclick="setTheme('dark')" title="Dark Mode"><i class="fas fa-moon"></i></button>
+          <button class="theme-toggle-btn light-btn" id="light-btn" onclick="setTheme('light')" title="Light Mode"><i class="fas fa-sun"></i></button>
+        </div>
+
+      </div>
+
+      <!-- HOME -->
+      <div id="page-home">
+        <div class="hero">
+          <h1>Learn Smarter,<br>Score Higher</h1>
+          <p>Challenge yourself, sharpen your knowledge, and climb higher with every quiz. Your smartest study session starts here.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-card-icon">📚</span>
+            <span class="stat-card-val" id="stat-module-count">8</span>
+            <span class="stat-card-label">Modules Available</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-icon">❓</span>
+            <span class="stat-card-val" id="stat-question-count">1710</span>
+            <span class="stat-card-label">Total Questions</span>
+          </div>
+          <div class="stat-card" onclick="showPage('achievements')" style="cursor:pointer">
+            <span class="stat-card-icon">🏆</span>
+            <span class="stat-card-val" id="stat-ach-count">12</span>
+            <span class="stat-card-label">Achievements</span>
+          </div>
+        </div>
+        <div id="modules-grid"></div>
+      </div>
+
+      <!-- QUIZ -->
+      <div id="page-quiz">
+        <div class="quiz-header">
+          <button class="back-btn" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> Back</button>
+          <div class="quiz-info">
+            <div class="quiz-title" id="quiz-subject-title">—</div>
+            <div class="quiz-meta" id="quiz-level-meta">—</div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <div class="q-counter" id="q-counter">0/0</div>
+        </div>
+        <div class="quiz-body">
+          <div class="loading-state" id="loading-state">
+            <div class="loader"></div>
+            <div class="loading-text">Loading Questions…</div>
+          </div>
+          <div id="question-area" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div id="page-results">
+        <div class="result-emoji" id="result-emoji">🎉</div>
+        <div class="result-title" id="result-title">Quiz Complete!</div>
+        <div class="result-sub" id="result-sub">Here's how you did</div>
+        <div class="result-grid">
+          <div class="result-stat">
+            <div class="result-stat-val" id="res-score" style="color:var(--accent)">—</div>
+            <div class="result-stat-label">Score</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-val" id="res-correct" style="color:var(--green)">—</div>
+            <div class="result-stat-label">Correct</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-val" id="res-wrong" style="color:var(--red)">—</div>
+            <div class="result-stat-label">Wrong</div>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button class="result-btn secondary" onclick="showPage('home')">← Home</button>
+          <button class="result-btn primary" id="retry-btn" onclick="retryQuiz()">Retry ↺</button>
+        </div>
+      </div>
+
+      <!-- HISTORY -->
+      <div id="page-history">
+        <div class="history-title">Quiz History</div>
+        <div id="history-list"></div>
+      </div>
+
+      <!-- ACHIEVEMENTS -->
+      <div id="page-achievements">
+        <div class="achievements-title">🏆 Achievements</div>
+        <div class="achievements-sub">Unlock badges by completing quizzes and reaching milestones.</div>
+        <div class="achievements-summary">
+          <div class="ach-icon" style="font-size:32px;background:transparent">🏅</div>
+          <div>
+            <div class="ach-summary-val" id="ach-unlocked-count">0</div>
+            <div class="ach-summary-label">Badges Unlocked</div>
+          </div>
+          <div class="ach-summary-sep"></div>
+          <div>
+            <div class="ach-summary-val" id="ach-total-count" style="color:var(--muted)">0</div>
+            <div class="ach-summary-label">Total Badges</div>
+          </div>
+        </div>
+        <div class="achievements-grid" id="achievements-grid"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+</div>
+
+
+<script src="academic.js"></script>
+<script src="datastruc.js"></script>
+<script src="comsys.js"></script>
+<script src="datacom.js"></script>
+<script src="comarchi.js"></script>
+<script src="database.js"></script>
+
+
+
+<script src="academic.js"></script>
+<script src="datastruc.js"></script>
+<script src="comsys.js"></script>
+<script src="datacom.js"></script>
+<script src="comarchi.js"></script>
+<script src="database.js"></script>
+<script src="python_questions.js"></script>
+<script src="programming.js"></script>
+
+</body>
+</html>

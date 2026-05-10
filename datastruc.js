@@ -1,0 +1,223 @@
+// Data Structure and Algorithms questions extracted from app.js
+
+const BA_QUESTIONS = [
+  { q: "What is an algorithm?", options: ["A program", "A step-by-step procedure to solve a problem", "A data structure", "A programming language"], answer: 1, explanation: "An algorithm is a finite sequence of well-defined instructions to solve a problem or perform a task." },
+  { q: "Which is NOT a characteristic of a good algorithm?", options: ["Clear", "Finite", "Complex and hard to understand", "Correct"], answer: 2, explanation: "Good algorithms should be clear and understandable, not overly complex." },
+  { q: "Divide-and-conquer is a:", options: ["Data structure", "Algorithm design paradigm", "Programming language", "Search method"], answer: 1, explanation: "Divide-and-conquer breaks problems into smaller subproblems, solves them, and combines results." },
+  { q: "What does pseudocode help with?", options: ["Running code", "Describing algorithm logic before implementing", "Storing data", "None"], answer: 1, explanation: "Pseudocode describes algorithm logic in a language-independent, human-readable form." },
+  { q: "Algorithm efficiency refers to:", options: ["How complicated it looks", "Resource usage like time and memory", "Programming language used", "Documentation"], answer: 1, explanation: "Efficiency measures how well an algorithm uses time and space resources." },
+  { q: "Which design paradigm is greedy algorithms?", options: ["Dividing into parts", "Making locally optimal choices at each step", "Trying all possibilities", "Storing solutions"], answer: 1, explanation: "Greedy algorithms make locally optimal choices, hoping to find a global optimum." },
+  { q: "Dynamic programming solves problems by:", options: ["Dividing into parts", "Storing solutions to subproblems and reusing them", "Random selection", "No memory"], answer: 1, explanation: "Dynamic programming stores solutions to overlapping subproblems to avoid recomputation." },
+  { q: "An algorithm is finite when it:", options: ["Has no end", "Terminates in a finite number of steps", "Is long", "Takes forever"], answer: 1, explanation: "Finiteness means an algorithm must terminate after a specific number of steps." },
+  { q: "Input to an algorithm is:", options: ["Not needed", "Data provided to the algorithm before execution", "Only one value", "Optional"], answer: 1, explanation: "Input is the data the algorithm receives and processes to produce output." },
+  { q: "Output of an algorithm should be:", options: ["Never provided", "Result(s) of executing the algorithm on the input", "Always empty", "Random"], answer: 1, explanation: "Output is the result or results produced after the algorithm processes the input." },
+  { q: "Correctness of an algorithm means:", options: ["It compiles", "It produces correct results for all valid inputs", "It runs fast", "It is readable"], answer: 1, explanation: "An algorithm is correct if it produces the right output for every valid input." },
+  { q: "Deterministic algorithms:", options: ["Produce random results", "Always produce same output for same input", "Change their behavior", "Are unpredictable"], answer: 1, explanation: "Deterministic algorithms always follow the same steps and produce identical output for the same input." },
+  { q: "A recursive algorithm:", options: ["Never calls itself", "Calls itself to solve subproblems", "Requires loops only", "Cannot use itself"], answer: 1, explanation: "Recursive algorithms solve problems by calling themselves with smaller or simpler inputs." },
+  { q: "Iterative algorithms use:", options: ["Recursion", "Loops to repeat steps until condition is met", "Random generation", "No repetition"], answer: 1, explanation: "Iterative algorithms use loops to repeatedly execute steps until a termination condition is reached." },
+  { q: "When choosing an algorithm, consider:", options: ["Only speed", "Time complexity, space complexity, and problem constraints", "Only memory", "Nothing"], answer: 1, explanation: "Algorithm selection should consider time/space trade-offs and problem-specific requirements." },
+  { q: "Modularity in algorithm design means:", options: ["Making it long", "Breaking problems into independent, manageable parts", "No organization", "Single complex piece"], answer: 1, explanation: "Modular design breaks algorithms into separate, manageable functions or modules." },
+  { q: "Robustness in algorithms refers to:", options: ["Speed only", "Handling errors and unusual inputs gracefully", "Just functionality", "No error handling"], answer: 1, explanation: "Robust algorithms handle edge cases, invalid inputs, and errors appropriately." },
+  { q: "Testing an algorithm involves:", options: ["No testing", "Verifying correctness with various test cases", "Hoping it works", "Skipping validation"], answer: 1, explanation: "Algorithm testing checks correctness across different inputs, including edge cases." },
+  { q: "Documentation for algorithms should include:", options: ["Nothing", "Purpose, input/output, complexity, and logic explanation", "Only code", "Is optional"], answer: 1, explanation: "Good documentation explains the algorithm's purpose, parameters, complexity, and how it works." },
+  { q: "Algorithm analysis helps by:", options: ["Being unnecessary", "Predicting performance and choosing the best solution", "Wasting time", "No benefit"], answer: 1, explanation: "Analysis lets you understand performance characteristics and compare algorithm efficiency." },
+  { q: "Optimization of algorithms means:", options: ["Making them longer", "Improving efficiency while maintaining correctness", "Unnecessary", "Making them complex"], answer: 1, explanation: "Optimization improves time/space efficiency without sacrificing correctness." },
+  { q: "Edge cases in algorithms are:", options: ["Not important", "Boundary conditions and extreme inputs that test limits", "Rare", "Can be ignored"], answer: 1, explanation: "Edge cases test algorithm behavior at boundaries and with extreme inputs." },
+  { q: "Scalability of an algorithm refers to:", options: ["Only small inputs", "How well it performs as input size grows", "Irrelevant", "No importance"], answer: 1, explanation: "Scalability measures algorithm performance on increasingly large inputs." },
+  { q: "Algorithm visualization helps by:", options: ["Not useful", "Understanding how algorithms work through step-by-step display", "Confusing only", "Unnecessary"], answer: 1, explanation: "Visualization shows algorithm execution step-by-step, making logic easier to understand." },
+  { q: "Which is a phase of algorithm development?", options: ["No phases", "Analysis, design, implementation, testing", "Only coding", "No planning"], answer: 1, explanation: "Development phases include problem analysis, design, implementation, and testing." },
+  { q: "Abstraction in algorithm design means:", options: ["Hiding nothing", "Hiding implementation details and showing only essential features", "Being vague", "No simplification"], answer: 1, explanation: "Abstraction hides complexity, showing only relevant features needed to use the algorithm." },
+  { q: "Algorithm efficiency trade-off often involves:", options: ["Nothing", "Balancing time complexity against space complexity", "No choices", "One is always better"], answer: 1, explanation: "Often faster algorithms use more memory; choice depends on available resources and constraints." },
+  { q: "Correctness vs efficiency:", options: ["Only correctness matters", "Correctness is essential; efficiency optimizes a correct algorithm", "Efficiency replaces correctness", "Both are unrelated"], answer: 1, explanation: "An algorithm must be correct first; optimization improves a already-correct solution." },
+  { q: "Algorithm selection depends on:", options: ["Personal preference", "Problem size, available resources, and performance requirements", "Randomness", "No factors"], answer: 1, explanation: "Choose algorithms based on input size, memory available, and performance needs." },
+  { q: "The foundation of computer science includes:", options: ["Only data structures", "Algorithms as methods to solve computational problems", "No foundation", "Just programming"], answer: 1, explanation: "Algorithms are fundamental to computer science, enabling solutions to computational problems." }
+];
+
+const AA_QUESTIONS = [
+  { q: "What does Big-O notation measure?", options: ["Exact time", "Upper bound on algorithm growth rate", "Memory only", "Nothing"], answer: 1, explanation: "Big-O describes the worst-case growth rate of an algorithm's running time." },
+  { q: "O(1) time complexity means:", options: ["Always slow", "Constant time regardless of input size", "Linear time", "Quadratic time"], answer: 1, explanation: "O(1) operations take the same time regardless of input size; very efficient." },
+  { q: "O(n) time complexity indicates:", options: ["Constant", "Linear growth with input size", "Logarithmic", "Quadratic"], answer: 1, explanation: "O(n) means running time grows linearly with input size." },
+  { q: "O(n²) algorithms are:", options: ["Always fast", "Slower for large inputs due to quadratic growth", "Optimal", "Never used"], answer: 1, explanation: "O(n²) algorithms become very slow as input size grows; suitable only for small inputs." },
+  { q: "O(log n) is:", options: ["Slow", "Very efficient, logarithmic growth with input size", "Linear", "Exponential"], answer: 1, explanation: "O(log n) is very efficient; doubling input size adds only one step." },
+  { q: "What is space complexity?", options: ["Time needed", "Memory used relative to input size", "Speed", "Input length"], answer: 1, explanation: "Space complexity measures how much memory an algorithm uses." },
+  { q: "Time complexity vs space complexity:", options: ["Same thing", "Both matter; often there's a trade-off between them", "Only time matters", "Only space matters"], answer: 1, explanation: "Both are important; faster algorithms might use more memory and vice versa." },
+  { q: "Big-Theta notation represents:", options: ["Upper bound only", "Tight bounds on both upper and lower", "Lower bound only", "Nothing specific"], answer: 1, explanation: "Θ(f(n)) means the algorithm grows exactly at rate f(n), both upper and lower." },
+  { q: "Big-Omega notation represents:", options: ["Upper bound", "Lower bound on algorithm growth", "Average case", "No meaning"], answer: 1, explanation: "Ω(f(n)) describes the best-case or lower bound on algorithm growth." },
+  { q: "Average case complexity is:", options: ["Rarely considered", "Expected performance on typical random input", "Same as worst case", "Not useful"], answer: 1, explanation: "Average case shows typical performance; different from best and worst cases." },
+  { q: "Best case complexity describes:", options: ["Typical performance", "Minimum time with optimal input conditions", "Average performance", "No importance"], answer: 1, explanation: "Best case is the minimum time with the most favorable input conditions." },
+  { q: "Worst case complexity describes:", options: ["Best scenario", "Maximum time with worst possible input", "Average case", "Random behavior"], answer: 1, explanation: "Worst case is the maximum time needed; guarantees algorithm won't exceed it." },
+  { q: "Which growth rate is most efficient?", options: ["O(n³)", "O(1)", "O(n²)", "O(2^n)"], answer: 1, explanation: "O(1) is constant time, the most efficient. Performance doesn't depend on input size." },
+  { q: "Which is exponential complexity?", options: ["O(n)", "O(2^n)", "O(n log n)", "O(log n)"], answer: 1, explanation: "O(2^n) grows exponentially; extremely slow even for moderate input sizes." },
+  { q: "Comparing O(n log n) and O(n²):", options: ["Same speed", "O(n log n) is faster for large inputs", "O(n²) is better", "Cannot compare"], answer: 1, explanation: "O(n log n) grows slower than O(n²); n log n is preferred for larger inputs." },
+  { q: "An algorithm with O(n!) complexity is:", options: ["Practical for all sizes", "Impractical even for small inputs", "Fast", "Useful"], answer: 1, explanation: "O(n!) is factorial complexity; extremely impractical for inputs larger than ~10." },
+  { q: "How does doubling input affect O(n) algorithm?", options: ["No change", "Running time doubles", "Stays same", "Quadruples"], answer: 1, explanation: "Doubling input to O(n) algorithm doubles its running time." },
+  { q: "How does doubling input affect O(n²) algorithm?", options: ["Doubles", "Quadruples", "No change", "Halves"], answer: 1, explanation: "Doubling input to O(n²) algorithm quadruples its running time (2²)." },
+  { q: "How does doubling input affect O(log n) algorithm?", options: ["Stays same", "Increases slightly (adds ~1)", "Doubles", "Halves"], answer: 1, explanation: "Doubling input adds only a small constant to O(log n) running time." },
+  { q: "Amortized complexity refers to:", options: ["No meaning", "Average time over a sequence of operations", "Worst case", "Best case only"], answer: 1, explanation: "Amortized analysis averages cost over multiple operations, useful for structures with variable costs." },
+  { q: "Algorithm complexity depends on:", options: ["Nothing", "Problem size (n) and operations per unit", "Random factors", "Only input"], answer: 1, explanation: "Complexity is expressed as a function of input size n and number of operations." },
+  { q: "Which analysis counts basic operations?", options: ["Theoretical analysis", "Empirical analysis", "Statistical analysis", "No counting"], answer: 1, explanation: "Theoretical analysis counts basic operations to determine complexity mathematically." },
+  { q: "Empirical analysis of algorithms involves:", options: ["No measurement", "Implementing and timing actual execution on real inputs", "Only theory", "Guessing"], answer: 1, explanation: "Empirical analysis measures actual runtime by running the algorithm." },
+  { q: "For practical purposes, O(n log n) and O(n) difference becomes significant at:", options: ["Small inputs", "Very large inputs (thousands+)", "Never", "Always"], answer: 1, explanation: "For large inputs, O(n log n) vs O(n) difference is noticeable." },
+  { q: "Complexity analysis helps choose algorithms by:", options: ["No help", "Predicting performance at different scales", "Not useful", "Being irrelevant"], answer: 1, explanation: "Complexity analysis lets you predict performance and choose suitable algorithms." },
+  { q: "Polynomial time algorithms are:", options: ["Very slow", "O(n^k) for constant k; practical for reasonable input sizes", "O(2^n)", "Exponential"], answer: 1, explanation: "Polynomial time O(n^k) is considered practical and feasible." },
+  { q: "The hierarchy from best to worst complexity is:", options: ["No order", "O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2^n) < O(n!)", "Random", "All equal"], answer: 1, explanation: "This order shows growth rate from constant to factorial." },
+  { q: "Comparing algorithms, focus on:", options: ["Nothing", "Growth rate for large inputs, not small constant factors", "Only constants", "Random"], answer: 1, explanation: "For large inputs, growth rate matters more than constant factors." },
+  { q: "When input is very small, algorithm:", options: ["Analysis matters", "Differences matter less; even slow algorithms are fast", "Still follows Big-O", "Big-O irrelevant"], answer: 1, explanation: "For small inputs, actual runtime is short regardless of Big-O; analysis matters more for large inputs." },
+  { q: "Algorithm optimization focuses on:", options: ["Only speed", "Improving Big-O complexity while maintaining correctness", "Memory only", "No improvement"], answer: 1, explanation: "Optimization aims to reduce time/space complexity without sacrificing correctness." }
+];
+
+const SORT_QUESTIONS = [
+  { q: "What is sorting?", options: ["Adding elements", "Arranging data in order (ascending/descending)", "Removing elements", "Finding elements"], answer: 1, explanation: "Sorting arranges a collection of items in a specified order." },
+  { q: "Bubble sort time complexity is:", options: ["O(n)", "O(n²) average and worst case", "O(log n)", "O(1)"], answer: 1, explanation: "Bubble sort is O(n²) due to nested loops comparing adjacent elements." },
+  { q: "Selection sort:", options: ["Merges halves", "Finds minimum and places at beginning repeatedly", "Divides and conquers", "Uses queues"], answer: 1, explanation: "Selection sort repeatedly finds the minimum unsorted element and places it correctly." },
+  { q: "Insertion sort is:", options: ["Divide-and-conquer", "Building sorted list by inserting elements one at a time", "Merge-based", "Comparison-free"], answer: 1, explanation: "Insertion sort builds a sorted array by inserting elements into their correct positions." },
+  { q: "Merge sort time complexity is:", options: ["O(n²)", "O(n log n) in all cases", "O(n)", "O(log n)"], answer: 1, explanation: "Merge sort is always O(n log n) due to its divide-and-conquer structure." },
+  { q: "Quicksort average case complexity is:", options: ["O(n²)", "O(n log n)", "O(n)", "O(1)"], answer: 1, explanation: "Quicksort averages O(n log n) but can be O(n²) in worst case with bad pivot selection." },
+  { q: "Heapsort uses:", options: ["Linked lists", "A heap data structure for sorting", "Queues", "No structure"], answer: 1, explanation: "Heapsort builds a heap and repeatedly extracts the max element." },
+  { q: "Counting sort works on:", options: ["All numbers", "Non-negative integers with known range", "Strings only", "No restriction"], answer: 1, explanation: "Counting sort is O(n) but requires integers and known maximum value." },
+  { q: "Stable sorting preserves:", options: ["Nothing", "Relative order of equal elements", "Input order", "Size"], answer: 1, explanation: "Stable sorts maintain relative order of items with equal keys." },
+  { q: "Which sort is NOT comparison-based?", options: ["Bubble sort", "Counting sort", "Merge sort", "Insertion sort"], answer: 1, explanation: "Counting sort uses counting, not comparisons, to sort integers." },
+  { q: "In-place sorting uses:", options: ["Extra space equal to input", "Minimal extra space", "Lots of memory", "No space"], answer: 1, explanation: "In-place sorts use O(1) extra space, modifying the input directly." },
+  { q: "Which sort is in-place?", options: ["Merge sort", "Quicksort", "Counting sort", "Radix sort"], answer: 1, explanation: "Quicksort and selection sort are in-place; merge sort requires O(n) extra space." },
+  { q: "Radix sort complexity is:", options: ["O(n²)", "O(n × k) where k is number of digits", "O(log n)", "O(1)"], answer: 1, explanation: "Radix sort is O(n × k) where k is the number of digits/characters." },
+  { q: "Shell sort is a:", options: ["Divide-and-conquer", "Generalization of insertion sort with diminishing gaps", "Merge variant", "No variant"], answer: 1, explanation: "Shell sort extends insertion sort by comparing elements at increasing distances." },
+  { q: "Timsort is used in:", options: ["Old systems", "Python and Java standard libraries", "Embedded systems", "Nowhere"], answer: 1, explanation: "Timsort, a hybrid of merge and insertion sort, is used in modern language libraries." },
+  { q: "When to use quicksort:", options: ["Never", "Often for average case speed and in-place sorting", "Always slow", "For sorted data"], answer: 1, explanation: "Quicksort is popular for average-case O(n log n) and in-place operation." },
+  { q: "When to use merge sort:", options: ["Only small inputs", "When O(n log n) guarantee and stability matter", "Never", "Always"], answer: 1, explanation: "Use merge sort when you need guaranteed O(n log n) and stable sorting." },
+  { q: "Sorting stability matters when:", options: ["Never", "Objects have multiple sort keys and relative order of ties matters", "Always", "No importance"], answer: 1, explanation: "Stability is important in multi-key sorting to preserve secondary sort order." },
+  { q: "External sorting is used for:", options: ["Small data", "Data larger than available memory (disk sorting)", "RAM only", "Not needed"], answer: 1, explanation: "External sorting handles datasets too large to fit in memory by using disk I/O." },
+  { q: "Comparison-based sorts lower bound is:", options: ["O(n)", "O(n log n)", "O(n²)", "O(1)"], answer: 1, explanation: "Comparison-based sorts cannot do better than O(n log n) in worst case." },
+  { q: "Bucket sort works by:", options: ["Comparing all", "Distributing elements into buckets and sorting each", "Single pass", "Random order"], answer: 1, explanation: "Bucket sort divides input into buckets, sorts them individually, then concatenates." },
+  { q: "Sorting linked lists:", options: ["Not possible", "Possible but some algorithms work better than others", "Easy", "Same as arrays"], answer: 1, explanation: "Merge sort works well for linked lists since it doesn't require random access." },
+  { q: "Adaptive sorting:", options: ["Fixed performance", "Takes advantage of partially sorted data", "No variation", "Ignores order"], answer: 1, explanation: "Adaptive sorts like insertion sort perform better on nearly-sorted data." },
+  { q: "For random order large data, choose:", options: ["Bubble sort", "Quicksort or merge sort", "Selection sort", "No choice"], answer: 1, explanation: "Quicksort (average case) or merge sort (guaranteed) are best for large random data." },
+  { q: "For nearly sorted data, choose:", options: ["Bubble sort", "Insertion sort (adaptive)", "Merge sort", "Counting sort"], answer: 1, explanation: "Insertion sort adapts to partially sorted data, being nearly O(n)." },
+  { q: "Sorting integers in known range:", options: ["Use comparison sort", "Use counting or radix sort", "No choice", "All same"], answer: 1, explanation: "For integers with known maximum, counting/radix sort beats comparison sorts." },
+  { q: "In-place vs stable trade-off:", options: ["Both always", "In-place sorts may not be stable and vice versa", "Always stable", "No trade-off"], answer: 1, explanation: "In-place and stable requirements sometimes conflict; choose based on needs." },
+  { q: "Sorting parallelization:", options: ["Not possible", "Possible; merge sort and quicksort parallelize well", "No benefit", "Never done"], answer: 1, explanation: "Merge sort parallelizes naturally through divide-and-conquer." },
+  { q: "Most practical all-purpose sort:", options: ["Bubble sort", "Quicksort or Timsort", "Insertion sort", "Selection sort"], answer: 1, explanation: "Quicksort and Timsort offer best practical performance for general use." },
+  { q: "Sorting algorithms fundamentally help:", options: ["No purpose", "Organizing data for efficient retrieval and processing", "Nothing", "Being complex"], answer: 1, explanation: "Sorting enables efficient searching, deduplication, and organized data display." }
+];
+
+const SEARCH_QUESTIONS = [
+  { q: "What is searching?", options: ["Sorting data", "Finding if an element exists in a collection", "Removing elements", "Organizing"], answer: 1, explanation: "Searching determines whether a specific element is present in a data collection." },
+  { q: "Linear search time complexity is:", options: ["O(1)", "O(n)", "O(log n)", "O(n²)"], answer: 1, explanation: "Linear search checks each element sequentially, so O(n) in worst case." },
+  { q: "Linear search works on:", options: ["Only sorted data", "Any data, sorted or unsorted", "Only arrays", "No data"], answer: 1, explanation: "Linear search requires no sorting; it works on any data structure." },
+  { q: "Binary search requires:", options: ["No sorting", "Data to be sorted first", "Linked lists", "Hash tables"], answer: 1, explanation: "Binary search only works on sorted data, dividing search space in half each step." },
+  { q: "Binary search time complexity is:", options: ["O(n)", "O(log n)", "O(1)", "O(n²)"], answer: 1, explanation: "Binary search is O(log n) as it eliminates half the search space each step." },
+  { q: "Comparing linear and binary search:", options: ["Same speed", "Binary is faster on sorted data; linear works anywhere", "Linear is faster", "No difference"], answer: 1, explanation: "Binary search is faster for sorted data (O(log n) vs O(n)) but requires sorting first." },
+  { q: "Interpolation search works best on:", options: ["Random data", "Uniformly distributed sorted data", "Unsorted data", "No data"], answer: 1, explanation: "Interpolation search estimates element position for uniform distributions." },
+  { q: "Exponential search uses:", options: ["Binary search on entire range", "Binary search on exponentially growing range", "Linear search", "No search"], answer: 1, explanation: "Exponential search finds range then uses binary search within it." },
+  { q: "Ternary search divides into:", options: ["Two parts", "Three parts, checking two points", "Four parts", "No division"], answer: 1, explanation: "Ternary search divides the range into three sections." },
+  { q: "Jump search is:", options: ["Binary search variant", "Finds block then linear within it", "Exponential", "No method"], answer: 1, explanation: "Jump search jumps by fixed steps, then linearly searches within the block." },
+  { q: "Hash table search is O(1) in:", options: ["Worst case", "Average case with good hash function", "Always", "Never"], answer: 1, explanation: "Hash tables give O(1) average case but O(n) worst case with collisions." },
+  { q: "When to use binary search:", options: ["All cases", "When data is sorted and you need efficiency", "Never", "No reason"], answer: 1, explanation: "Use binary search on sorted data when you need better than linear time." },
+  { q: "Searching in BST is:", options: ["Always O(n)", "O(log n) average, O(n) worst if unbalanced", "O(1)", "Not possible"], answer: 1, explanation: "BST search is O(log n) for balanced trees but degrades to O(n) if unbalanced." },
+  { q: "Sentinel search is used to:", options: ["Add security", "Eliminate boundary checks and speed up linear search", "Sort data", "Hash items"], answer: 1, explanation: "Sentinel search adds a matching element at the end to eliminate boundary checking." },
+  { q: "Searching linked lists requires:", options: ["Binary search", "Linear search (no random access)", "Hash search", "No search"], answer: 1, explanation: "Linked lists require linear search since there's no random access." },
+  { q: "Self-organizing search maintains:", options: ["Random order", "Frequently accessed elements at the front", "Sorted order", "No order"], answer: 1, explanation: "Self-organizing search moves found elements to the front for future efficiency." },
+  { q: "Fibonacci search is:", options: ["Binary search variant", "Like binary search using Fibonacci divisions", "Linear search", "No variant"], answer: 1, explanation: "Fibonacci search divides using Fibonacci ratios instead of exact halves." },
+  { q: "Searching with pattern matching uses:", options: ["Simple comparison", "Algorithms like KMP or Boyer-Moore", "Linear scan", "No algorithm"], answer: 1, explanation: "String pattern matching uses specialized algorithms to avoid unnecessary comparisons." },
+  { q: "Two-pointer search is useful for:", options: ["Single array", "Finding pairs with specific sum in sorted array", "Unsorted data", "No use"], answer: 1, explanation: "Two-pointer technique finds pairs efficiently in sorted arrays." },
+  { q: "Range searching finds:", options: ["Single element", "All elements within a range of values", "One value", "No elements"], answer: 1, explanation: "Range search returns all elements between two values." },
+  { q: "Nearest neighbor search finds:", options: ["Exact match", "Element closest to a given value", "Far elements", "No match"], answer: 1, explanation: "Nearest neighbor finds the closest element to a target." },
+  { q: "Database indexing uses:", options: ["No indexing", "Hash tables and B-trees for fast search", "Linear scan", "Nothing"], answer: 1, explanation: "Database indexes use structures like B-trees to enable fast searching." },
+  { q: "Search space pruning means:", options: ["Avoiding search", "Eliminating parts that cannot contain target", "Searching all", "No pruning"], answer: 1, explanation: "Pruning eliminates search branches that cannot lead to the target." },
+  { q: "Binary search on function values uses:", options: ["Only arrays", "Monotonic functions to find values efficiently", "No function", "Linear only"], answer: 1, explanation: "Binary search on functions finds values where a function meets criteria." },
+  { q: "Searching in 2D arrays requires:", options: ["Binary search", "Different approaches; staircase search is efficient", "Linear only", "No method"], answer: 1, explanation: "Staircase search from corner uses properties of sorted 2D arrays efficiently." },
+  { q: "Time-space trade-off in search:", options: ["No trade-off", "Hash tables use space to achieve O(1) average time", "Always linear", "One always better"], answer: 1, explanation: "Hash tables trade memory for speed, achieving O(1) lookup with extra space." },
+  { q: "Worst case for linear search:", options: ["Element at start", "Element not present", "Element in middle", "All same"], answer: 1, explanation: "Worst case is when element is absent; must check all n elements." },
+  { q: "Worst case for binary search:", options: ["Element absent", "O(log n) regardless", "Element at start", "No worst case"], answer: 1, explanation: "Binary search is always O(log n) even when element is absent." },
+  { q: "Searching helps by:", options: ["No purpose", "Locating data quickly for decision-making and retrieval", "Being slow", "Nothing"], answer: 1, explanation: "Efficient search is essential for databases, search engines, and applications." },
+  { q: "Advanced search (indexing, hashing):", options: ["Not useful", "Critical for large data to achieve practical search times", "Only theory", "No benefit"], answer: 1, explanation: "Advanced techniques enable sub-linear search on massive datasets." }
+];
+
+const LL_QUESTIONS = [
+  { q: "What is a linked list?", options: ["An array", "Linear data structure with nodes linked via pointers", "A tree", "A graph"], answer: 1, explanation: "A linked list connects nodes with pointers; allows dynamic sizing." },
+  { q: "A node in a linked list contains:", options: ["Only data", "Data and pointer(s) to next/previous nodes", "Only pointers", "No data"], answer: 1, explanation: "Each node stores data and references to other nodes." },
+  { q: "Singly linked list nodes point to:", options: ["Two nodes", "One next node", "Previous only", "Nothing"], answer: 1, explanation: "Singly linked lists have one pointer per node pointing forward." },
+  { q: "Doubly linked list nodes point to:", options: ["One node", "Both next and previous nodes", "Three nodes", "No neighbors"], answer: 1, explanation: "Doubly linked lists have pointers to both next and previous nodes." },
+  { q: "Circular linked list last node points to:", options: ["Null", "First node (head)", "Nothing", "Random"], answer: 1, explanation: "Circular lists connect the last node back to the first." },
+  { q: "Insertion at head in linked list is:", options: ["O(n)", "O(1)", "O(log n)", "O(n²)"], answer: 1, explanation: "Inserting at the head is constant time; just update pointers." },
+  { q: "Searching in linked list is:", options: ["O(1)", "O(n)", "O(log n)", "No time"], answer: 1, explanation: "Searching linked lists requires traversal, so O(n) in general." },
+  { q: "Deletion from linked list at known position is:", options: ["O(n)", "O(1) to update pointers, but finding may be O(n)", "O(log n)", "Not possible"], answer: 1, explanation: "Deletion at a known position is O(1); finding it may be O(n)." },
+  { q: "Linked lists advantage over arrays:", options: ["No advantage", "Dynamic sizing, flexible insertion/deletion", "Fixed size", "Same performance"], answer: 1, explanation: "Linked lists grow dynamically and support efficient insertions/deletions." },
+  { q: "Linked lists disadvantage:", options: ["Can be small", "No random access; must traverse from start", "Always sorted", "Very fast"], answer: 1, explanation: "Linked lists require sequential access; no O(1) indexing like arrays." },
+  { q: "Reversing a linked list requires:", options: ["No reversal", "Traversing and reversing pointers", "Sorting first", "No method"], answer: 1, explanation: "Reversal updates each node's pointer to the previous node." },
+  { q: "Detecting a cycle in linked list uses:", options: ["No detection", "Fast/slow pointers (Floyd's algorithm)", "Sorting", "Linear scan"], answer: 1, explanation: "Floyd's algorithm with two pointers detects cycles efficiently." },
+  { q: "Merging two sorted linked lists is:", options: ["Not possible", "O(n+m) by comparison and linking", "Very slow", "O(n²)"], answer: 1, explanation: "Merge is O(n+m) comparing and linking nodes from both lists." },
+  { q: "Find middle of linked list:", options: ["Requires counting", "Use fast/slow pointers, slow at middle when fast at end", "Not possible", "Linear scan"], answer: 1, explanation: "Two-pointer approach finds middle in O(n) with one pass." },
+  { q: "LRU cache uses:", options: ["Arrays", "Doubly linked list with hash map", "Trees", "Single list"], answer: 1, explanation: "LRU caches use doubly linked lists for efficient reordering." },
+  { q: "Stack can be implemented with:", options: ["No structure", "Linked list with head insertion/deletion", "Only arrays", "Trees only"], answer: 1, explanation: "Linked lists efficiently implement stacks with O(1) operations." },
+  { q: "Queue can be implemented with:", options: ["Arrays only", "Linked list with tail insertion and head deletion", "Trees only", "No way"], answer: 1, explanation: "Queues use linked lists with separate head and tail pointers." },
+  { q: "Sentinel nodes in linked lists:", options: ["Not used", "Dummy nodes to simplify boundary cases", "Store data", "No purpose"], answer: 1, explanation: "Sentinel nodes eliminate boundary checks and simplify edge cases." },
+  { q: "Skip lists use:", options: ["Single level", "Multiple levels of linked lists for faster search", "Trees", "No levels"], answer: 1, explanation: "Skip lists have multiple levels for O(log n) average search." },
+  { q: "Finding nth node from end requires:", options: ["Sorting", "Two pointers separated by n positions", "Counting length", "No way"], answer: 1, explanation: "Two-pointer technique finds nth node from end in one pass." },
+  { q: "Adding two numbers stored as linked lists:", options: ["Not possible", "Traverse and add digit by digit with carry", "No method", "Requires arrays"], answer: 1, explanation: "Reverse traversal or recursion adds numbers represented as lists." },
+  { q: "Palindrome check in linked list:", options: ["Impossible", "Compare with reverse or use fast/slow pointers", "No method", "Requires array"], answer: 1, explanation: "Fast/slow pointers find middle, then compare forward and reverse." },
+  { q: "Memory usage linked list vs array:", options: ["Same", "Linked lists need extra space for pointers", "Arrays need more", "No difference"], answer: 1, explanation: "Linked lists have overhead for pointers; arrays are more memory-efficient." },
+  { q: "Copying a linked list requires:", options: ["Simple assignment", "Creating new nodes and copying data", "No copying", "Pointer only"], answer: 1, explanation: "Deep copy creates all new nodes; shallow copy shares nodes." },
+  { q: "When to use linked lists:", options: ["Never", "Frequent insertions/deletions, no random access needed", "All cases", "No reason"], answer: 1, explanation: "Use linked lists for dynamic collections with frequent modifications." },
+  { q: "Sorting linked lists:", options: ["Not possible", "Merge sort works well without random access", "Use bubble sort", "Requires array"], answer: 1, explanation: "Merge sort is ideal for linked lists; no random access needed." },
+  { q: "XOR linking compresses:", options: ["Nothing", "Space by using XOR of two pointers instead of two", "Memory nothing", "Not real"], answer: 1, explanation: "XOR linking uses one XOR pointer instead of two, but complexity increases." },
+  { q: "Linked list traversal is:", options: ["O(1)", "O(n) to visit each node", "O(log n)", "Not possible"], answer: 1, explanation: "Traversing all nodes requires O(n) time." },
+  { q: "Linked lists application includes:", options: ["Nothing", "Stacks, queues, graphs, undo/redo, playlists", "No use", "Theory only"], answer: 1, explanation: "Linked lists power many real-world data structures and applications." },
+  { q: "Garbage collection in linked lists:", options: ["Not needed", "Deallocates unused nodes in languages without automatic GC", "No cleanup", "Not important"], answer: 1, explanation: "Manual cleanup of deleted nodes is necessary in C/C++." }
+];
+
+const TREES_QUESTIONS = [
+  { q: "What is a tree?", options: ["Linear structure", "Hierarchical structure with root and child nodes", "A graph", "An array"], answer: 1, explanation: "A tree has a root and branches; parent-child relationships with no cycles." },
+  { q: "Root of a tree is:", options: ["Any node", "The top node with no parent", "Bottom node", "No root"], answer: 1, explanation: "Root is the topmost node; all other nodes are descendants." },
+  { q: "Leaf nodes are:", options: ["Middle nodes", "Nodes with no children", "Parent nodes", "All nodes"], answer: 1, explanation: "Leaf nodes are terminal nodes with no children." },
+  { q: "Binary tree has nodes with:", options: ["Any children", "At most 2 children", "Exactly 2 children", "No limit"], answer: 1, explanation: "Binary tree nodes have 0, 1, or 2 children maximum." },
+  { q: "Complete binary tree is:", options: ["No structure", "Filled except possibly last level which is left-filled", "Empty", "All internal"], answer: 1, explanation: "Complete trees are fully filled except possibly the last level." },
+  { q: "Perfect binary tree has:", options: ["Random structure", "All internal nodes with 2 children, all leaves at same level", "No structure", "Gaps"], answer: 1, explanation: "Perfect trees are completely filled at all levels." },
+  { q: "Binary Search Tree property:", options: ["No order", "Left < parent < right", "Random order", "No property"], answer: 1, explanation: "BST maintains left < parent < right property for efficient search." },
+  { q: "BST search time average is:", options: ["O(n)", "O(log n) for balanced tree", "O(1)", "O(n²)"], answer: 1, explanation: "Balanced BST search is O(log n); unbalanced degrades to O(n)." },
+  { q: "In-order traversal of BST gives:", options: ["Random order", "Sorted order", "Reverse order", "No order"], answer: 1, explanation: "In-order traversal of BST visits nodes in ascending sorted order." },
+  { q: "Pre-order traversal visits:", options: ["Children first", "Parent, then children", "Leaves first", "No order"], answer: 1, explanation: "Pre-order visits parent before children; useful for copying trees." },
+  { q: "Post-order traversal visits:", options: ["Parent first", "Children before parent", "Root first", "No order"], answer: 1, explanation: "Post-order visits children before parent; useful for deletion." },
+  { q: "Level-order traversal uses:", options: ["Recursion", "Queue to visit nodes level by level (BFS)", "Stack", "No queue"], answer: 1, explanation: "Level-order uses BFS with a queue to traverse row by row." },
+  { q: "AVL tree maintains:", options: ["No balance", "Height difference <= 1 between subtrees (balanced)", "Random heights", "No invariant"], answer: 1, explanation: "AVL trees self-balance via rotations keeping height log(n)." },
+  { q: "Red-Black tree uses:", options: ["No color", "Colors and properties to maintain balance", "Gray nodes", "One color"], answer: 1, explanation: "Red-black trees use color properties for loose balancing." },
+  { q: "Tree height is:", options: ["Always the same", "Distance from root to deepest leaf", "Number of nodes", "Width"], answer: 1, explanation: "Height is the longest path length from root to leaf." },
+  { q: "Tree balancing ensures:", options: ["No benefit", "Operations remain O(log n) instead of degrading to O(n)", "Always needed", "No use"], answer: 1, explanation: "Balancing prevents skewed trees that degrade to lists." },
+  { q: "Heap is a:", options: ["Random tree", "Complete binary tree with min/max property", "Not ordered", "No structure"], answer: 1, explanation: "Heaps are complete binary trees for efficient priority queues." },
+  { q: "Min heap property:", options: ["Parent > children", "Parent <= children", "No property", "Random"], answer: 1, explanation: "Min heaps have parents less than or equal to children." },
+  { q: "Max heap property:", options: ["Parent < children", "Parent >= children", "No property", "Random"], answer: 1, explanation: "Max heaps have parents greater than or equal to children." },
+  { q: "Heap sort time complexity:", options: ["O(n)", "O(n log n)", "O(n²)", "O(1)"], answer: 1, explanation: "Heap sort builds heap O(n) then extracts elements O(n log n)." },
+  { q: "Tree traversal all nodes is:", options: ["O(1)", "O(n) to visit each node once", "O(log n)", "Not possible"], answer: 1, explanation: "Traversing all nodes requires O(n) time." },
+  { q: "Trie (prefix tree) is used for:", options: ["Sorting", "Efficient string searching and autocomplete", "Graphs", "Numbers only"], answer: 1, explanation: "Tries store strings efficiently, enabling fast prefix lookups." },
+  { q: "Segment tree is used for:", options: ["Sorting", "Range queries and updates efficiently", "Graphs", "Linear lists"], answer: 1, explanation: "Segment trees support efficient range operations." },
+  { q: "Lowest Common Ancestor (LCA) finds:", options: ["Highest node", "Deepest common ancestor of two nodes", "Random ancestor", "No ancestor"], answer: 1, explanation: "LCA finds the deepest node that is ancestor to both." },
+  { q: "Tree diameter is:", options: ["Radius", "Longest path between any two nodes", "Height", "Width"], answer: 1, explanation: "Diameter is the longest path in the tree." },
+  { q: "Path sum in trees finds:", options: ["No path", "Root to leaf path with specific sum", "Any path", "No way"], answer: 1, explanation: "Path sum problems use recursion to find matching paths." },
+  { q: "Reconstructing tree from traversals:", options: ["Impossible", "Possible with two traversals (usually inorder + preorder)", "Not needed", "Only one"], answer: 1, explanation: "In-order + pre-order traversals uniquely determine a tree." },
+  { q: "Serializing a tree means:", options: ["No use", "Converting to format for storage or transmission", "Sorting", "Arranging"], answer: 1, explanation: "Serialization converts trees to strings for storage/communication." },
+  { q: "Validating a BST requires:", options: ["No check", "Verifying all nodes satisfy BST property", "Just structure", "Counting nodes"], answer: 1, explanation: "Validation ensures left < parent < right throughout." },
+  { q: "Trees are fundamental for:", options: ["No purpose", "File systems, databases, parsing, hierarchies", "Nothing", "Theory only"], answer: 1, explanation: "Trees enable efficient hierarchical data organization and algorithms." }
+];
+
+const DATASTRUC_SUBJECT_IDS = [15, 16, 17, 18, 19, 20];
+
+const DATASTRUC_QUESTION_BANKS = {
+
+  15: BA_QUESTIONS,
+
+  16: AA_QUESTIONS,
+
+  17: SORT_QUESTIONS,
+
+  18: SEARCH_QUESTIONS,
+
+  19: LL_QUESTIONS,
+
+  20: TREES_QUESTIONS,
+
+};
+
+// For browser usage
+
+window.DATASTRUC_SUBJECT_IDS = DATASTRUC_SUBJECT_IDS;
+
+window.DATASTRUC_QUESTION_BANKS = DATASTRUC_QUESTION_BANKS;
