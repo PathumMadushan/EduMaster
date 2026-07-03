@@ -1,0 +1,16 @@
+EduMaster Netlify Deploy Files
+
+How to deploy:
+1. Go to Netlify dashboard.
+2. Click Add new site > Deploy manually.
+3. Drag and drop this extracted folder or upload the ZIP file.
+4. Make sure index.html is in the root folder.
+5. Build command: leave empty.
+6. Publish directory: .
+
+Files included:
+- index.html
+- css/style.css
+- js/*.js
+- netlify.toml
+- _redirects
